@@ -83,7 +83,7 @@ def createControl(parent, i, height, info):
     elif info['style'] == 'Float':
         control_type = ControlType.FADER
     elif info['style'] == 'Int':
-        control_type = ControlType.FADER
+        control_type = ControlType.RADIO
     else:
         assert(False)
 
@@ -101,9 +101,14 @@ def createControl(parent, i, height, info):
     if info['default'] == 0.5:
         control.createProperty(t2)
         control.createValue(Value(key="x", default="%f" % info['default']))	
-    control.createProperty(t3)
+        control.createProperty(t3)
     control.setColor([1, 0, 0, 1])
     control.setFrame([0, height*i, frame[2], height])
+
+    if control_type == ControlType.RADIO:
+        _steps = tosc.Property("s", "steps", "%d" % (info['normMax'] + 1))
+        control.createProperty(_steps)
+
     msg = oscMsg()
     control.createOSC(message=msg)
     control.setScript(f"""
@@ -142,10 +147,18 @@ def createGroup(parent, key, pars):
     except:
         is_laser = 0
 
+    try:
+        is_led = int(pars[key]['led'])
+    except:
+        is_led = 0
+
     if is_laser:
         groupName = 'settings_laser_%d' % (index)
+    elif is_led:
+        groupName = 'settings_led_%d' % (index)
     else:
         groupName = 'settings_%d' % (index)
+
 
     group.setName(groupName)
     group.setFrame([0, 0, frame[2], frame[3]])
