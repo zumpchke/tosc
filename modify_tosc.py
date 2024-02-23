@@ -17,6 +17,8 @@ def oscMsg() -> tosc.OSC:
 				tosc.Partial(),  # Default is the constant '/'
 				tosc.Partial(type="PROPERTY", value="parent.name"),
 				tosc.Partial(),
+				tosc.Partial(type="PROPERTY", value="parent.parent.tag"),
+				tosc.Partial(),
 				tosc.Partial(type="PROPERTY", value="name"),
 				]
 			)
