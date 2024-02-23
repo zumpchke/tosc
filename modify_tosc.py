@@ -137,7 +137,10 @@ def createGroup(parent, key, pars):
     frame = parent.getFrame()
 
     index = pars[key]['index']
-    is_laser = int(pars[key]['laser'])
+    try:
+        is_laser = int(pars[key]['laser'])
+    except:
+        is_laser = 0
 
     if is_laser:
         groupName = 'settings_laser_%d' % (index)
