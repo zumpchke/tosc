@@ -85,7 +85,8 @@ def createControl(parent, i, height, info):
     elif info['style'] == 'Int':
         control_type = ControlType.RADIO
     else:
-        assert(False)
+        return
+        #assert(False)
 
 
     # Create control
@@ -101,7 +102,8 @@ def createControl(parent, i, height, info):
     if info['default'] == 0.5:
         control.createProperty(t2)
         control.createValue(Value(key="x", default="%f" % info['default']))	
-        control.createProperty(t3)
+
+    control.createProperty(t3)
     control.setColor([1, 0, 0, 1])
     control.setFrame([0, height*i, frame[2], height])
 
@@ -177,6 +179,9 @@ end
                     """)
     _visible = tosc.Property("s", "visible", "0")
     group.createProperty(_visible)
+
+    if 'Custom' not in pars[key]:
+        return
 
     num_pars = len(pars[key]['Custom'])
     height = int(parent.getH() / num_pars)
