@@ -78,12 +78,18 @@ def createControl(parent, i, height, info):
     frame = parent.getFrame()
     print(frame)
     control_type = None
+    buttonType = None
+
+    buttonType = 1
     if info['style'] == 'Toggle':
         control_type = ControlType.BUTTON
     elif info['style'] == 'Float':
         control_type = ControlType.FADER
     elif info['style'] == 'Int':
         control_type = ControlType.RADIO
+    elif info['style'] == 'Pulse':
+        control_type = ControlType.BUTTON
+        buttonType = 0
     else:
         return
         #assert(False)
@@ -92,7 +98,7 @@ def createControl(parent, i, height, info):
     # Create control
     control = tosc.ElementTOSC(parent.createChild(control_type))
     propName = 'prop_' + info['name'].lower()
-    t = tosc.Property("s", "buttonType", "1")
+    t = tosc.Property("s", "buttonType", str(buttonType))
     t1 = tosc.Property("s", "orientation", "1")
     t2 = tosc.Property("s", "centered", "1")
     t3 = tosc.Property("s", "tag", "ctl")
