@@ -154,10 +154,17 @@ def createGroup(parent, key, pars):
     except:
         is_led = 0
 
+    try:
+        is_filter = int(pars[key]['filter'])
+    except:
+        is_filter = 0
+
     if is_laser:
         groupName = 'settings_laser_%d' % (index)
     elif is_led:
         groupName = 'settings_led_%d' % (index)
+    elif is_filter:
+        groupName = 'settings_filter_%d' % (index)
     else:
         groupName = 'settings_%d' % (index)
 
